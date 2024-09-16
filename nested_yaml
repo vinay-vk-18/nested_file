@@ -1,0 +1,65 @@
+# Define the master template for a deployment configuration
+defaults: &defaults
+  image: "test-my-image"
+  replicas: 3
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+  environment:
+    - name: "ENV"
+      value: "default"
+
+# Define environment-specific configurations
+environments:
+  dev:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "development"
+    replicas: 1
+
+  QA:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "QA"
+    replicas: 2
+
+  QA2:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "QA2"
+    replicas: 2
+
+  QA3:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "QA3"
+    replicas: 2
+
+  staging:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "staging"
+    replicas: 3
+
+  production:
+    <<: *defaults
+    environment:
+      - name: "ENV"
+        value: "production"
+    replicas: 5
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi"
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
